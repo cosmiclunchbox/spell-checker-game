@@ -11,6 +11,9 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     private TextMeshProUGUI displayText;
 
     [SerializeField]
+    private BoxCollider2D boxCollider;
+
+    [SerializeField]
     private string word;
 
     private bool misspelled;
@@ -28,7 +31,6 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     // Start is called before the first frame update
     void Start()
     {
-        Initialize("wordlist", 0.2f);
         StartCoroutine(HandleWordLifetime(timeBeforeDespawn));
     }
 
@@ -36,13 +38,22 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     void FixedUpdate()
     {
         //MoveWord(0, -30f * Time.fixedDeltaTime);
+        //Debug.Log(boxCollider.bounds.center);
+        /*boxCollider.enabled = false;
+        bool spawnLocationObstructed = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.zero, 0);
+        boxCollider.enabled = true;
+
+        if (spawnLocationObstructed)
+        {
+            SetPosition(new Vector2(Random.Range(-200, 200), Random.Range(-100, 100)));
+        }*/
     }
 
-    // Initializes this word.
-    void Initialize(string wordFileName, float misspelledChance)
+    // Initializes this word. NOTE: This method must be called immediately after a WordController is created.
+    // The responsibility for calling this method falls upon the script that creates the WordController.
+    public void Initialize(string wordFileName, float misspelledChance)
     {
         displayText.GetComponent<RectTransform>().anchoredPosition = transform.position;
-        Debug.Log(transform.position);
         string[] wordList;
 
         // determine whether the word will be a misspelling or not
@@ -61,6 +72,9 @@ public class WordController : MonoBehaviour, IPointerDownHandler
         AssignWordFromList(wordList);
         SetDisplayWord();
 
+        SetWordHitboxSize();
+        SpawnWordInGame(new Vector2(-800, 100), new Vector2(800, -400));
+
         selected = false;
     }
 
@@ -68,6 +82,14 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     private void AssignWordFromList(string[] wordList)
     {
         word = wordList[Random.Range(0, wordList.Length)];
+    }
+
+    // Adjusts the size of the hitbox of this word to fit the length of the word.
+    private void SetWordHitboxSize()
+    {
+        float hitboxWidth = displayText.textBounds.size.x;
+        float hitboxHeight = displayText.GetComponent<RectTransform>().sizeDelta.y;
+        boxCollider.size = new Vector2(hitboxWidth, hitboxHeight);
     }
 
     // Sets the display text to the word.
@@ -83,6 +105,30 @@ public class WordController : MonoBehaviour, IPointerDownHandler
 
     }
 
+    // Places this word at a random position within the rectangular region defined by the given points
+    // such that it doesn't overlap with any other words in the game.
+    private void SpawnWordInGame(Vector2 topLeft, Vector2 bottomRight)
+    {
+        bool spawnLocationObstructed;
+        int spawnAttempts = 0;
+        do
+        {
+            SetPosition(new Vector2(Random.Range(topLeft.x, bottomRight.x), Random.Range(bottomRight.y, topLeft.y)));
+            boxCollider.enabled = false;
+            spawnLocationObstructed = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.zero, 0);
+            boxCollider.enabled = true;
+            spawnAttempts += 1;
+        }
+        while (spawnLocationObstructed && spawnAttempts < 25);
+
+        if (spawnAttempts >= 25)
+        {
+            Debug.Log("Failed to find valid spawning location for word.");
+            Destroy(gameObject);
+            //throw new System.Exception("Failed to find valid spawning location for word.");
+        }
+    }
+
     // Moves this word by the given amount in the x and y directions.
     private void MoveWord(float xAmount, float yAmount)
     {
@@ -94,6 +140,7 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     {
         transform.position = newPos;
         displayText.GetComponent<RectTransform>().anchoredPosition = transform.position;
+        //GetComponent<Collider>().transform.position = transform.position;
     }
 
     // Returns whether the word is misspelled or not, based on what it was initialized as.
