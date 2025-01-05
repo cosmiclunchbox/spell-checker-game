@@ -26,6 +26,7 @@ public class WordSpawner : MonoBehaviour
     // All word lists must be stored in /Assets/WordLists
     private string wordListFileName;
     private float misspellingChance;
+    private float wordSpawnInterval;
 
     // this fields are no longer used, since the word spawner is no longer in charge of
     // positioning the words after they are spawned in
@@ -34,17 +35,23 @@ public class WordSpawner : MonoBehaviour
 
     public enum Type
     {
-        NORMAL
+        NORMAL,
+        SCHOOL,
+        COLLEGE,
+        FANFIC,
+        AUTHOR,
+        SCIENTIST,
+        TYPER,
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        Initialize(0, Type.NORMAL);
-        StartCoroutine(SpawnWordsOnInterval(1f));
+        //Initialize(0, Type.NORMAL);
+        StartCoroutine(SpawnWordsOnInterval(wordSpawnInterval));
     }
 
-    // Initialize this word spawner.
+    // Initialize this word spawner. NOTE: This method must be called immediately after a WordSpawner is created.
     public void Initialize(int positionIndex, Type type)
     {
         SetPosition(new Vector2(-800 + positionIndex * 250, 250));
@@ -56,6 +63,43 @@ public class WordSpawner : MonoBehaviour
                 wordListFileName = "wordlist";
                 misspellingChance = 0.25f;
                 personDescription.text = "just a person";
+                wordSpawnInterval = 2.5f;
+                break;
+            case Type.SCHOOL:
+                wordListFileName = "school_list";
+                misspellingChance = 0.4f;
+                personDescription.text = "middle schooler";
+                wordSpawnInterval = 3f;
+                break;
+            case Type.COLLEGE:
+                wordListFileName = "college_list";
+                misspellingChance = 0.25f;
+                personDescription.text = "computer science major";
+                wordSpawnInterval = 2f;
+                break;
+            case Type.FANFIC:
+                wordListFileName = "fanfic_list";
+                misspellingChance = 0.4f;
+                personDescription.text = "fanfiction writer";
+                wordSpawnInterval = 2f;
+                break;
+            case Type.AUTHOR:
+                wordListFileName = "author_list";
+                misspellingChance = 0.1f;
+                personDescription.text = "bestselling author";
+                wordSpawnInterval = 1f;
+                break;
+            case Type.SCIENTIST:
+                wordListFileName = "scientist_list";
+                misspellingChance = 0.15f;
+                personDescription.text = "scientist";
+                wordSpawnInterval = 1.5f;
+                break;
+            case Type.TYPER:
+                wordListFileName = "typer_list";
+                misspellingChance = 0.5f;
+                personDescription.text = "professional fast typer";
+                wordSpawnInterval = 0.75f;
                 break;
             default:
                 throw new System.Exception("Unrecognized word spawner type.");
