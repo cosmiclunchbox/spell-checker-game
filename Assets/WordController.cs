@@ -21,6 +21,10 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     private bool selected;
     private enum WordDespawnOptions { MISSPELLING_CAUGHT, NORMAL_CAUGHT, MISSPELLING_DESPAWN, NORMAL_DESPAWN };
 
+    private Color wordNormalColor = Color.black;
+    private Color wordFailColor = Color.red;
+    private Color wordSuccessColor = Color.green;
+
     // IMPORTANT
     // Naming convention for word list files:
     // [].txt for normal words
@@ -73,7 +77,7 @@ public class WordController : MonoBehaviour, IPointerDownHandler
         SetDisplayWord();
 
         SetWordHitboxSize();
-        SpawnWordInGame(new Vector2(-700, 50), new Vector2(700, -400));
+        SpawnWordInGame(new Vector2(-600, 50), new Vector2(600, -400));
 
         selected = false;
     }
@@ -96,7 +100,7 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     private void SetDisplayWord()
     {
         displayText.text = word;
-        displayText.color = Color.white;
+        displayText.color = wordNormalColor;
         displayText.ForceMeshUpdate();
 
         float displayTextWidth = displayText.textBounds.size.x;
@@ -190,11 +194,11 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     {
         switch (type)
         {
-            case WordDespawnOptions.MISSPELLING_CAUGHT: displayText.color = Color.green; break;
-            case WordDespawnOptions.NORMAL_CAUGHT: displayText.color = Color.red; break;
-            case WordDespawnOptions.MISSPELLING_DESPAWN: displayText.color = Color.red; break;
-            case WordDespawnOptions.NORMAL_DESPAWN: displayText.color = Color.white; break;
-            default: displayText.color = Color.white; break;
+            case WordDespawnOptions.MISSPELLING_CAUGHT: displayText.color = wordSuccessColor; break;
+            case WordDespawnOptions.NORMAL_CAUGHT: displayText.color = wordFailColor; break;
+            case WordDespawnOptions.MISSPELLING_DESPAWN: displayText.color = wordFailColor; break;
+            case WordDespawnOptions.NORMAL_DESPAWN: displayText.color = wordNormalColor; break;
+            default: displayText.color = wordNormalColor; break;
         }
 
         yield return new WaitForSeconds(0.2f);

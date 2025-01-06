@@ -144,6 +144,7 @@ public class WordSpawner : MonoBehaviour
     // Spawns words on a constant time interval.
     private IEnumerator SpawnWordsOnInterval(float seconds)
     {
+        yield return new WaitForSeconds(Random.Range(1f, 2.5f));
         while (true)
         {
             //GameObject word = Instantiate(wordPrefab, DetermineWordSpawnLocation(), Quaternion.identity);

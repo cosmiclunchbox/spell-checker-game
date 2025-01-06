@@ -7,6 +7,8 @@ public class WordSpawnerSpawner : MonoBehaviour
     [SerializeField]
     private GameObject wordSpawnerPrefab;
 
+    private float wordSpawningDelay = 15;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,7 @@ public class WordSpawnerSpawner : MonoBehaviour
             GameObject person = Instantiate(wordSpawnerPrefab, Vector2.zero, Quaternion.identity);
             person.GetComponent<WordSpawner>().Initialize(positionIndex, type);
             positionIndex++;
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(wordSpawningDelay);
         }
         yield return null;
     }
