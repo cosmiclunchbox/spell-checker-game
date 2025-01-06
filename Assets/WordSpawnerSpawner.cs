@@ -23,7 +23,7 @@ public class WordSpawnerSpawner : MonoBehaviour
             GameObject person = Instantiate(wordSpawnerPrefab, Vector2.zero, Quaternion.identity);
             person.GetComponent<WordSpawner>().Initialize(positionIndex, type);
             positionIndex++;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(10);
         }
         yield return null;
     }

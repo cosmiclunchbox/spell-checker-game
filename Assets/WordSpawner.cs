@@ -17,7 +17,7 @@ public class WordSpawner : MonoBehaviour
     [SerializeField]
     private GameObject wordPrefab;
 
-    private static readonly string[] POSSIBLE_NAMES = { "mike", "alice", "kevin", "denise", "karen", "albert", "avani", "nathan", };
+    private static readonly string[] POSSIBLE_NAMES = { "mike", "alice", "kevin", "denise", "karen", "albert", "avani", "nathan", "hatsune miku"};
 
     // IMPORTANT
     // Naming convention for word list files:

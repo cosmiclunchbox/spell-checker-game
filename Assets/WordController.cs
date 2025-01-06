@@ -17,7 +17,7 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     private string word;
 
     private bool misspelled;
-    private float timeBeforeDespawn = 10;
+    private float timeBeforeDespawn = 4;
     private bool selected;
     private enum WordDespawnOptions { MISSPELLING_CAUGHT, NORMAL_CAUGHT, MISSPELLING_DESPAWN, NORMAL_DESPAWN };
 
@@ -73,7 +73,7 @@ public class WordController : MonoBehaviour, IPointerDownHandler
         SetDisplayWord();
 
         SetWordHitboxSize();
-        SpawnWordInGame(new Vector2(-800, 100), new Vector2(800, -400));
+        SpawnWordInGame(new Vector2(-700, 50), new Vector2(700, -400));
 
         selected = false;
     }
