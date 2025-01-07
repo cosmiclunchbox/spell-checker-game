@@ -175,15 +175,19 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     private IEnumerator HandleWordLifetime(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        if (misspelled)
-        {
-            Debug.Log("HAHA LOOSER");
-            StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.MISSPELLING_DESPAWN));
-        }
-        else
-        {
 
-            StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.NORMAL_DESPAWN));
+        if (!selected)
+        {
+            if (misspelled)
+            {
+                Debug.Log("HAHA LOOSER");
+                StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.MISSPELLING_DESPAWN));
+            }
+            else
+            {
+
+                StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.NORMAL_DESPAWN));
+            }
         }
 
         yield return null;
