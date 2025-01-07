@@ -160,13 +160,14 @@ public class WordController : MonoBehaviour, IPointerDownHandler
         if (misspelled)
         {
             Debug.Log("Correctly selected misspelled word.");
-            ScoreManager.IncrementScore();
+            ScoreManager.IncreaseScore(100);
             Debug.Log(ScoreManager.GetScore());
             StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.MISSPELLING_CAUGHT));
         }
         else
         {
             Debug.Log("HAHA LOOSER");
+            ScoreManager.IncreaseScore(-100);
             StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.NORMAL_CAUGHT));
         }
     }
@@ -181,6 +182,7 @@ public class WordController : MonoBehaviour, IPointerDownHandler
             if (misspelled)
             {
                 Debug.Log("HAHA LOOSER");
+                ScoreManager.IncreaseScore(-100);
                 StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.MISSPELLING_DESPAWN));
             }
             else

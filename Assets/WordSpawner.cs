@@ -99,7 +99,7 @@ public class WordSpawner : MonoBehaviour
                 wordListFileName = "typer_list";
                 misspellingChance = 0.5f;
                 personDescription.text = "professional fast typer";
-                wordSpawnInterval = 0.75f;
+                wordSpawnInterval = 0.5f;
                 break;
             default:
                 throw new System.Exception("Unrecognized word spawner type.");

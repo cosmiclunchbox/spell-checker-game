@@ -25,6 +25,7 @@ public class WordSpawnerSpawner : MonoBehaviour
             GameObject person = Instantiate(wordSpawnerPrefab, Vector2.zero, Quaternion.identity);
             person.GetComponent<WordSpawner>().Initialize(positionIndex, type);
             positionIndex++;
+            ScoreManager.IncrementNumUsers();
             yield return new WaitForSeconds(wordSpawningDelay);
         }
         yield return null;
