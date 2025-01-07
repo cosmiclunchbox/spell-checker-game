@@ -608,7 +608,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: you've been fired!
+  m_text: the company wins!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 25b78f202e3235d4db703b7daaa65335, type: 2}
   m_sharedMaterial: {fileID: 7861585716755599208, guid: 25b78f202e3235d4db703b7daaa65335, type: 2}

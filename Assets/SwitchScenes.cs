@@ -43,6 +43,13 @@ public class SwitchScenes : MonoBehaviour
         SceneManager.LoadScene("GameOver");
     }
 
+    // Switches to the company win screen when the company wins (i.e. makes $10,000).
+    public static void CompanyWon()
+    {
+        NoteDownScoreData();
+        SceneManager.LoadScene("CompanyWon");
+    }
+
     // Saves a timestamp of when this function is called. NOTE: this function should be called at the very beginning
     // when a new game gets started, so that timekeeping is accurate.
     public static void InitializeGameStartedTime()

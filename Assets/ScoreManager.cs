@@ -42,6 +42,12 @@ public class ScoreManager : MonoBehaviour
         {
             SwitchScenes.PlayerDied();
         }
+
+        // detects whether the company has made a lot of money and triggers company win condition if so
+        if (score >= 10000)
+        {
+            SwitchScenes.CompanyWon();
+        }
     }
 
     // Passively generate money for the CEO's pockets.
