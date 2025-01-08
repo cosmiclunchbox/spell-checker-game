@@ -153,6 +153,22 @@ MonoBehaviour:
   displayText: {fileID: 4493919571504018602}
   boxCollider: {fileID: 8098805184952821489}
   word: hi
+  wordLists:
+  - {fileID: 4900000, guid: 754199777a982a0428629eb58841358e, type: 3}
+  - {fileID: 4900000, guid: fd95c3ac4df285e4fb803fec1e56e4bf, type: 3}
+  - {fileID: 4900000, guid: e04f6b354b0160041b59810a6f89ae13, type: 3}
+  - {fileID: 4900000, guid: 958f16e43cdc7a94a8ebfaa06f1c0db6, type: 3}
+  - {fileID: 4900000, guid: 0f777fb059bc2d24bbf170ae1b843840, type: 3}
+  - {fileID: 4900000, guid: d6ce9aa42d439134aa824761d8770b57, type: 3}
+  - {fileID: 4900000, guid: 7368322afd96d664c9c581d2db201bf9, type: 3}
+  wordMisspelledLists:
+  - {fileID: 4900000, guid: 88931dca574cacd4585c329e20b944c0, type: 3}
+  - {fileID: 4900000, guid: 539a9823b6bbc284aae92c4bd36dd17a, type: 3}
+  - {fileID: 4900000, guid: 6b3a9185494c6aa4dbd84412ced4224b, type: 3}
+  - {fileID: 4900000, guid: 8f244ea72fb7fe44eaa3149c3f07eadf, type: 3}
+  - {fileID: 4900000, guid: a5470812530ac8042a22f6b9e61525ec, type: 3}
+  - {fileID: 4900000, guid: e74ba13c5d56e774cbc85bade720a90c, type: 3}
+  - {fileID: 4900000, guid: 85d7032017d60b641b6a328a4e1a9907, type: 3}
   successSound: {fileID: 8300000, guid: 93c13f1dc9379904f95a3c497bc10dca, type: 3}
   failureSound: {fileID: 8300000, guid: 89ee196610d363f4a892835ac80592fb, type: 3}
   missSound: {fileID: 8300000, guid: 8c52d4b954b4a444dba4991d3e0c9b69, type: 3}

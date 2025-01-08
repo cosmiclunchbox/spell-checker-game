@@ -32,7 +32,17 @@ public class WordController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
     // [].txt for normal words
     // []_misspelled.txt for misspelled words
     // All word lists must be stored in /Assets/WordLists
+    // NOTE: this field is no longer used because the method of accessing word lists has been updated
     private const string BASE_WORD_LIST_PATH = @"Assets\WordLists\";
+
+    // NOTE: the lists must be given in the same order as the enum values are defined in WordSpawner.Type
+    // i.e. normal, school student, college student, fanfic, author, scientist, typer
+    [SerializeField]
+    private TextAsset[] wordLists;
+
+    // NOTE: see above note
+    [SerializeField]
+    private TextAsset[] wordMisspelledLists;
 
     [SerializeField]
     private AudioClip successSound;
@@ -68,9 +78,11 @@ public class WordController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
 
     // Initializes this word. NOTE: This method must be called immediately after a WordController is created.
     // The responsibility for calling this method falls upon the script that creates the WordController.
+    // NOTE: this function has been replaced, see below for new function.
     public void Initialize(string wordFileName, float misspelledChance)
     {
-        displayText.GetComponent<RectTransform>().anchoredPosition = transform.position;
+
+        /*displayText.GetComponent<RectTransform>().anchoredPosition = transform.position;
         string[] wordList;
 
         // determine whether the word will be a misspelling or not
@@ -83,6 +95,39 @@ public class WordController : MonoBehaviour, IPointerDownHandler, IPointerEnterH
         {
             misspelled = false;
             wordList = File.ReadAllLines(BASE_WORD_LIST_PATH + wordFileName + ".txt");
+        }
+
+        // set as a random word from the appropriate word list (depending on whether it's a misspelling)
+        AssignWordFromList(wordList);
+        SetDisplayWord();
+
+        SetWordHitboxSize();
+        SpawnWordInGame(new Vector2(-600, 50), new Vector2(600, -400));
+
+        selected = false;
+
+        soundManager = gameObject.GetComponent<WordSoundManager>();*/
+        throw new System.NotImplementedException();
+    }
+
+    // Initializes this word. NOTE: This method must be called immediately after a WordController is created.
+    // The responsibility for calling this method falls upon the script that creates the WordController.
+    public void Initialize(WordSpawner.Type wordSpawnerType, float misspelledChance)
+    {
+        displayText.GetComponent<RectTransform>().anchoredPosition = transform.position;
+        string[] wordList;
+        int wordListIndex = (int)wordSpawnerType;
+
+        // determine whether the word will be a misspelling or not
+        if (Random.Range(0f, 1f) < misspelledChance)
+        {
+            misspelled = true;
+            wordList = wordMisspelledLists[wordListIndex].text.Split('\n');
+        }
+        else
+        {
+            misspelled = false;
+            wordList = wordLists[wordListIndex].text.Split('\n');
         }
 
         // set as a random word from the appropriate word list (depending on whether it's a misspelling)

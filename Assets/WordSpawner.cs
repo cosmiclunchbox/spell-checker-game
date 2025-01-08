@@ -24,6 +24,7 @@ public class WordSpawner : MonoBehaviour
     // [].txt for normal words
     // []_misspelled.txt for misspelled words
     // All word lists must be stored in /Assets/WordLists
+    private Type spawnerType;
     private string wordListFileName;
     private float misspellingChance;
     private float wordSpawnInterval;
@@ -56,6 +57,7 @@ public class WordSpawner : MonoBehaviour
     {
         SetPosition(new Vector2(-800 + positionIndex * 250, 250));
         personName.text = POSSIBLE_NAMES[Random.Range(0, POSSIBLE_NAMES.Length)];
+        spawnerType = type;
 
         switch (type)
         {
@@ -149,7 +151,7 @@ public class WordSpawner : MonoBehaviour
         {
             //GameObject word = Instantiate(wordPrefab, DetermineWordSpawnLocation(), Quaternion.identity);
             GameObject word = Instantiate(wordPrefab, Vector2.zero, Quaternion.identity);
-            word.GetComponent<WordController>().Initialize(wordListFileName, misspellingChance);
+            word.GetComponent<WordController>().Initialize(spawnerType, misspellingChance);
             yield return new WaitForSeconds(seconds);
         }
     }
