@@ -11,9 +11,13 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI numUserDisplay;
 
+    [SerializeField]
+    private TextMeshProUGUI timeDisplay;
+
     private static ScoreManager instance;
     private int score = 0;
     private int numUsers = 0;
+    private float startTime;
 
     void Awake()
     {
@@ -30,6 +34,7 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startTime = Time.time;
         SwitchScenes.InitializeGameStartedTime();
         StartCoroutine(EarnMoney());
     }
@@ -48,6 +53,8 @@ public class ScoreManager : MonoBehaviour
         {
             SwitchScenes.CompanyWon();
         }
+
+        UpdateTimeDisplay();
     }
 
     // Passively generate money for the CEO's pockets.
@@ -76,10 +83,15 @@ public class ScoreManager : MonoBehaviour
     }
 
     // Updates the user count display to show the current number of users.
-
     private void UpdateNumUserDisplay()
     {
         numUserDisplay.text = "users: " + numUsers;
+    }
+
+    // Updates the timer display to show the current time since the game started.
+    private void UpdateTimeDisplay()
+    {
+        timeDisplay.text = "employed for " + (int)(Time.time - startTime) + " sec";
     }
 
     // Checks that the score manager has been properly instantiated before it is used.

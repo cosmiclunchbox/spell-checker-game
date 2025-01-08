@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class WordController : MonoBehaviour, IPointerDownHandler
+public class WordController : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     private TextMeshProUGUI displayText;
@@ -19,9 +19,11 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     private bool misspelled;
     private float timeBeforeDespawn = 4;
     private bool selected;
+    private bool decaying = false;
     private enum WordDespawnOptions { MISSPELLING_CAUGHT, NORMAL_CAUGHT, MISSPELLING_DESPAWN, NORMAL_DESPAWN };
 
     private Color wordNormalColor = Color.black;
+    private Color wordHoveredColor = Color.gray;
     private Color wordFailColor = Color.red;
     private Color wordSuccessColor = Color.green;
 
@@ -194,6 +196,8 @@ public class WordController : MonoBehaviour, IPointerDownHandler
 
         if (!selected)
         {
+            decaying = true;
+
             if (misspelled)
             {
                 Debug.Log("HAHA LOOSER");
@@ -235,6 +239,24 @@ public class WordController : MonoBehaviour, IPointerDownHandler
         {
             selected = true;
             WhenWordClicked();
+        }
+    }
+
+    // Detects when the player mouses over this word.
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!selected && !decaying)
+        {
+            displayText.color = wordHoveredColor;
+        }
+    }
+
+    // Detects when the player stops mousing over this word.
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (!selected && !decaying)
+        {
+            displayText.color = wordNormalColor;
         }
     }
 }
