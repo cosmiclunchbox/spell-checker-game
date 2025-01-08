@@ -20,6 +20,7 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // Triggers when the mouse is hovering over the button.
     public void OnPointerEnter(PointerEventData eventData)
     {
+        gameObject.GetComponent<AudioSource>().Play();
         buttonText.color = Color.green;
     }
 

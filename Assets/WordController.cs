@@ -32,6 +32,17 @@ public class WordController : MonoBehaviour, IPointerDownHandler
     // All word lists must be stored in /Assets/WordLists
     private const string BASE_WORD_LIST_PATH = @"Assets\WordLists\";
 
+    [SerializeField]
+    private AudioClip successSound;
+
+    [SerializeField]
+    private AudioClip failureSound;
+
+    [SerializeField]
+    private AudioClip missSound;
+
+    private WordSoundManager soundManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +91,8 @@ public class WordController : MonoBehaviour, IPointerDownHandler
         SpawnWordInGame(new Vector2(-600, 50), new Vector2(600, -400));
 
         selected = false;
+
+        soundManager = gameObject.GetComponent<WordSoundManager>();
     }
 
     // Picks a word from the given list and assigns it.
@@ -162,12 +175,14 @@ public class WordController : MonoBehaviour, IPointerDownHandler
             Debug.Log("Correctly selected misspelled word.");
             ScoreManager.IncreaseScore(100);
             Debug.Log(ScoreManager.GetScore());
+            StartCoroutine(soundManager.PlaySound(successSound));
             StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.MISSPELLING_CAUGHT));
         }
         else
         {
             Debug.Log("HAHA LOOSER");
             ScoreManager.IncreaseScore(-100);
+            StartCoroutine(soundManager.PlaySound(failureSound));
             StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.NORMAL_CAUGHT));
         }
     }
@@ -183,6 +198,7 @@ public class WordController : MonoBehaviour, IPointerDownHandler
             {
                 Debug.Log("HAHA LOOSER");
                 ScoreManager.IncreaseScore(-100);
+                StartCoroutine(soundManager.PlaySound(missSound));
                 StartCoroutine(WordDisappearingAnimation(WordDespawnOptions.MISSPELLING_DESPAWN));
             }
             else
